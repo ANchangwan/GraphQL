@@ -28,10 +28,16 @@ const typeDefs = gql`
 
 let users = [
   {
-    id: "1",
+    id: "3",
     firstName: "nico",
     lastName: "las",
     fullName: "nicolas",
+  },
+  {
+    id: "4",
+    firstName: "An",
+    lastName: "changwan",
+    fullName: "Anchangwan",
   },
 ];
 
@@ -39,10 +45,12 @@ let tweets = [
   {
     id: "1",
     text: "first one!",
+    userId: "1",
   },
   {
     id: "2",
     text: "second one!",
+    userId: "2",
   },
 ];
 
@@ -52,7 +60,6 @@ const resolvers = {
       return tweets;
     },
     tweet(root, { id }) {
-      console.log(id, text);
       return tweets.find((tweet) => tweet.id === id);
     },
     allUsers() {
@@ -62,6 +69,10 @@ const resolvers = {
   },
   Mutation: {
     postTweet(_, { text, userId }) {
+      const userFind = users.find((user) => user.Id === userId);
+      if (!userFind) {
+        throw new Error(`userId(${userId}) is not find`);
+      }
       const newTweet = {
         id: tweets.length + 1,
         text,
@@ -79,6 +90,11 @@ const resolvers = {
   User: {
     fullName({ firstName, lastName }) {
       return `${firstName} ${lastName}`;
+    },
+  },
+  Tweet: {
+    author({ userId }) {
+      return users.find((user) => user.id === userId);
     },
   },
 };
