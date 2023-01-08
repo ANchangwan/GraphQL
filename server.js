@@ -55,13 +55,13 @@ const typeDefs = gql`
 
 let users = [
   {
-    id: "3",
+    id: "1",
     firstName: "nico",
     lastName: "las",
     fullName: "nicolas",
   },
   {
-    id: "4",
+    id: "2",
     firstName: "An",
     lastName: "changwan",
     fullName: "Anchangwan",
